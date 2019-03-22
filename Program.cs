@@ -1,5 +1,5 @@
-﻿using CefOperator.CefCore;
-using CefOperator.CefScripts;
+﻿using CefWebKit.CefCore;
+using CefWebKit.CefScripts;
 using CefSharp;
 using Chen.CommonLibrary;
 using Nancy.Hosting.Self;
@@ -13,8 +13,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
-namespace CefOperator
+namespace CefWebKit
 {
     class Program
     {
@@ -22,7 +23,6 @@ namespace CefOperator
         {
             FileHelper fh = new FileHelper();
             bool useApi = false;
-
             Console.WriteLine("+++++++CEF RENDERER START++++++++");
             #region 初始化CEF
             if (!Cef.IsInitialized)
@@ -38,7 +38,15 @@ namespace CefOperator
             #endregion
 
             #region 加载Setting
-            Setting.setting = JsonConvert.DeserializeObject<Setting>(fh.readFile("setting.json"));
+            string settingPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setting.json");
+            if (File.Exists(settingPath))
+            {
+                Setting.setting = JsonConvert.DeserializeObject<Setting>(fh.readFile(settingPath));
+            }
+            else
+            {
+                Setting.setting = new Setting();
+            }
             #endregion
 
             #region 其他初始化

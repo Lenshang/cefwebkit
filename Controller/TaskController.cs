@@ -1,6 +1,6 @@
-﻿using CefOperator.CefCore;
-using CefOperator.Controller.Model;
-using CefOperator.Model;
+﻿using CefWebKit.CefCore;
+using CefWebKit.Controller.Model;
+using CefWebKit.Model;
 using Nancy;
 using Nancy.ModelBinding;
 using System;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CefOperator.Controller
+namespace CefWebKit.Controller
 {
     public class TaskController : NancyModule
     {

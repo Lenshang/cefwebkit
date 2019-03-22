@@ -1,4 +1,4 @@
-﻿using CefOperator.CefCore.Filters;
+﻿using CefWebKit.CefCore.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace CefOperator.Model
+namespace CefWebKit.Model
 {
     public enum RULEMODE
     {

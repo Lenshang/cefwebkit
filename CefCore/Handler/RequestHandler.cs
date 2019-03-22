@@ -1,5 +1,5 @@
-﻿using CefOperator.CefCore.Filters;
-using CefOperator.Model;
+﻿using CefWebKit.CefCore.Filters;
+using CefWebKit.Model;
 using CefSharp;
 using System;
 using System.Collections.Concurrent;
@@ -9,7 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CefOperator.CefCore.Handler
+namespace CefWebKit.CefCore.Handler
 {
     public class RequestHandler : IRequestHandler
     {

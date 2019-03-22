@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CefOperator.CefCore.Filters
+namespace CefWebKit.CefCore.Filters
 {
     public class MemoryStreamResponseFilter : IResponseFilter
     {

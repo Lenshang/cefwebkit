@@ -10,8 +10,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2E038A4E-6E2C-4333-B877-EF3CF6BAB5CD}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>CefOperator</RootNamespace>
-    <AssemblyName>CefOperator</AssemblyName>
+    <RootNamespace>CefWebKit</RootNamespace>
+    <AssemblyName>CefWebKit</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -128,6 +128,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestScripts\main.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestScripts\test.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

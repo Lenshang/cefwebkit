@@ -1,5 +1,5 @@
-﻿using CefOperator.CefCore.Handler;
-using CefOperator.Model;
+﻿using CefWebKit.CefCore.Handler;
+using CefWebKit.Model;
 using CefSharp;
 using CefSharp.WinForms;
 using Chen.CommonLibrary;
@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CefOperator.CefCore
+namespace CefWebKit.CefCore
 {
     public class CefForm : Form, IDisposable
     {

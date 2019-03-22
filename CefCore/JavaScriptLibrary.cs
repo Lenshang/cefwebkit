@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CefOperator.CefCore
+namespace CefWebKit.CefCore
 {
     public class JavaScriptLibrary
     {

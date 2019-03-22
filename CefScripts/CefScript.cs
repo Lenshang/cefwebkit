@@ -1,4 +1,4 @@
-﻿using CefOperator.CefCore;
+﻿using CefWebKit.CefCore;
 using Chen.CommonLibrary;
 using System;
 using System.Collections.Generic;
@@ -7,16 +7,19 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CefSharp;
-namespace CefOperator.CefScripts
+using System.IO;
+using System.Windows.Forms;
+
+namespace CefWebKit.CefScripts
 {
     public class CefScript
     {
-        public string filePath { get; set; }
+        public FileInfo filePath { get; set; }
         public FileHelper fileHelper { get; set; }
         public CefForm ScriptForm { get; set; }
         public CefScript(string scriptFile)
         {
-            this.filePath = scriptFile;
+            this.filePath = new FileInfo(scriptFile);
             this.fileHelper = new FileHelper();
             this.Init();
         }
@@ -26,12 +29,12 @@ namespace CefOperator.CefScripts
             CefForm jsCef = null;
             var r = CefTaskPool.DefaultPool.getOrCreate("MainScript", out jsCef);
             this.ScriptForm = jsCef;
-            this.ScriptForm.browser.RegisterAsyncJsObject("scriptEngine", new ScriptEngine());
+            this.ScriptForm.browser.RegisterAsyncJsObject("scriptEngine", new ScriptEngine(this));
             this.ScriptForm.WaitInitialized();
             string url = AppDomain.CurrentDomain.BaseDirectory + @"CefScripts\MainPage.html";
             url = url.Replace("\\", "/").Replace(" ", "%20");
             this.ScriptForm.LoadUrl(url);
-            //jsCef.ShowDevTools();
+            jsCef.ShowDevTools();
         }
 
         public Task<JavascriptResponse> Run()
@@ -41,11 +44,15 @@ namespace CefOperator.CefScripts
             {
                 Thread.Sleep(100);
             }
-            return this.ScriptForm.browser.EvaluateScriptAsync(fileHelper.readFile(this.filePath));
+            return this.ScriptForm.browser.EvaluateScriptAsync(fileHelper.readFile(this.filePath.FullName));
         }
 
         public static CefScript Create(string scriptFile)
         {
+            if (!File.Exists(scriptFile))
+            {
+                scriptFile= Path.Combine(Environment.CurrentDirectory, scriptFile);
+            }
             return new CefScript(scriptFile);
         }
     }
