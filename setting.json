@@ -1,0 +1,7 @@
+{
+  "Version": "0.1",
+  "AppKeys": [ "cefwebkit" ],
+  "Port": 7321,
+  "BrowserAlive": 300,
+  "MaxBrowserCount": 100
+}
