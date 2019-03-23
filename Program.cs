@@ -55,12 +55,15 @@ namespace CefWebKit
             #endregion
 
             #region 判断启动参数
-            args = new string[1]{"./TestScripts/main.js"};
+            args = new string[1]{"./TestScripts/game.js"};
             string arg = args?.FirstOrDefault();
             if (!string.IsNullOrEmpty(arg))
             {
                 var cefScript = CefScript.Create(arg);
                 cefScript.Run();
+                cefScript.ScriptForm.FormClosed += (obj, eventArg) => {
+                    Environment.Exit(0);
+                };
             }
             else
             {

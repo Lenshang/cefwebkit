@@ -22,9 +22,13 @@ namespace CefWebKit.CefCore
         public RequestHandler requestHandler { get; private set; }
         public bool IsInitialized { get; set; } = false;
         public bool ScriptMode { get; set; } = false;
-        public CefForm(string cookiePath="")
-        {
 
+        public System.Drawing.Size FormSize { get; set; } = new System.Drawing.Size(1280, 720);
+        public bool FullScreen { get; set; } = false;
+        public CefForm(string cookiePath="",int formWidth=800,int formHeight=600,bool fullScreen=false)
+        {
+            this.FormSize = new System.Drawing.Size(formWidth, formHeight);
+            //初始化CEF
             var requestContextHandler = new RequestContextHandler(cookiePath);
             var requestContext = new RequestContext(requestContextHandler);
             renderProcess = new RenderProcessMessageHandler();
@@ -43,6 +47,25 @@ namespace CefWebKit.CefCore
             //cookieManager = Cef.GetGlobalCookieManager();
         }
 
+        public void ChangeScreenSize()
+        {
+            this.Invoke(new Action(() => {
+                //是否全屏
+                if (this.FullScreen)
+                {
+                    this.MaximumSize = new System.Drawing.Size();
+                    this.FormBorderStyle = FormBorderStyle.None;     //设置窗体为无边框样式
+                    this.WindowState = FormWindowState.Maximized;    //最大化窗体 
+                }
+                else
+                {
+                    //设置窗口固定大小
+                    this.MaximumSize = this.FormSize;
+                    this.MinimumSize = this.FormSize;
+                }
+            }));
+        }
+
         private void Browser_IsBrowserInitializedChanged(object sender, IsBrowserInitializedChangedEventArgs e)
         {
             this.IsInitialized = e.IsBrowserInitialized;
@@ -58,6 +81,7 @@ namespace CefWebKit.CefCore
 
         public void LoadUrl(string url)
         {
+            this.ChangeScreenSize();
             //browser.ShowDevTools();//debug
             this.browser.Load(url);
         }

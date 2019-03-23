@@ -39,6 +39,14 @@ namespace CefWebKit.CefScripts
             jsCef.WaitToScript(scriptStr);
         }
 
+        public void changeSize(int width,int height)
+        {
+            CefForm jsCef = null;
+            var r = CefTaskPool.DefaultPool.getOrCreate("MainScript", out jsCef);
+            jsCef.FormSize = new System.Drawing.Size(width, height);
+            jsCef.ChangeScreenSize();
+        }
+
         public void loadUrl(string url)
         {
             //CefForm jsCef = null;

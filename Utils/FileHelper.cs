@@ -112,5 +112,50 @@ namespace Chen.CommonLibrary
             }
             return result;
         }
+
+        public bool CopyAll(string sourcePath, string savePath,Func<string,bool> filter=null)
+        {
+            if (filter == null)
+            {
+                filter = x => {
+                    return true;
+                };
+            }
+            if (!Directory.Exists(savePath))
+            {
+                Directory.CreateDirectory(savePath);
+            }
+
+            try
+            {
+                string[] labDirs = Directory.GetDirectories(sourcePath);//目录
+                string[] labFiles = Directory.GetFiles(sourcePath);//文件
+                if (labFiles.Length > 0)
+                {
+                    for (int i = 0; i < labFiles.Length; i++)
+                    {
+                        if (filter(labFiles[i]))//执行Filter
+                        {
+                            File.Copy(sourcePath + "\\" + Path.GetFileName(labFiles[i]), savePath + "\\" + Path.GetFileName(labFiles[i]), true);
+                        }
+                    }
+                }
+                if (labDirs.Length > 0)
+                {
+                    for (int j = 0; j < labDirs.Length; j++)
+                    {
+                        Directory.GetDirectories(sourcePath + "\\" + Path.GetFileName(labDirs[j]));
+
+                        //递归调用
+                        this.CopyAll(sourcePath + "\\" + Path.GetFileName(labDirs[j]), savePath + "\\" + Path.GetFileName(labDirs[j]), filter);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

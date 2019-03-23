@@ -17,6 +17,7 @@ namespace CefWebKit.CefScripts
         public FileInfo filePath { get; set; }
         public FileHelper fileHelper { get; set; }
         public CefForm ScriptForm { get; set; }
+        public DirectoryInfo runTempPath { get; set; }
         public CefScript(string scriptFile)
         {
             this.filePath = new FileInfo(scriptFile);
@@ -31,10 +32,26 @@ namespace CefWebKit.CefScripts
             this.ScriptForm = jsCef;
             this.ScriptForm.browser.RegisterAsyncJsObject("scriptEngine", new ScriptEngine(this));
             this.ScriptForm.WaitInitialized();
-            string url = AppDomain.CurrentDomain.BaseDirectory + @"CefScripts\MainPage.html";
+            //创建执行临时文件夹
+            var tempPath = Path.Combine(Environment.CurrentDirectory, "_cefrun");
+            this.runTempPath = new DirectoryInfo(tempPath);
+            if (Directory.Exists(tempPath))
+            {
+                Directory.Delete(tempPath,true);
+            }
+            Directory.CreateDirectory(tempPath);
+            //复制文件执行必要文件到临时文件夹
+            fileHelper.CopyAll(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CefContent"), tempPath);
+
+            //复制执行代码下的文件到临时文件夹
+            fileHelper.CopyAll(filePath.DirectoryName, tempPath,x=> {
+                return x != "_cefrun";
+            });
+
+            string url= tempPath + @"\MainPage.html";
             url = url.Replace("\\", "/").Replace(" ", "%20");
             this.ScriptForm.LoadUrl(url);
-            jsCef.ShowDevTools();
+            //jsCef.ShowDevTools();
         }
 
         public Task<JavascriptResponse> Run()
@@ -44,7 +61,7 @@ namespace CefWebKit.CefScripts
             {
                 Thread.Sleep(100);
             }
-            return this.ScriptForm.browser.EvaluateScriptAsync(fileHelper.readFile(this.filePath.FullName));
+            return this.ScriptForm.browser.EvaluateScriptAsync(fileHelper.readFile(Path.Combine(this.runTempPath.FullName,this.filePath.Name)));
         }
 
         public static CefScript Create(string scriptFile)
