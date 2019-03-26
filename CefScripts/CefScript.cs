@@ -51,7 +51,7 @@ namespace CefWebKit.CefScripts
             string url= tempPath + @"\MainPage.html";
             url = url.Replace("\\", "/").Replace(" ", "%20");
             this.ScriptForm.LoadUrl(url);
-            //jsCef.ShowDevTools();
+            jsCef.ShowDevTools();
         }
 
         public Task<JavascriptResponse> Run()
