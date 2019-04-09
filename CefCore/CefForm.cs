@@ -77,10 +77,12 @@ namespace CefWebKit.CefCore
             {
                 Thread.Sleep(100);
             }
+            
         }
 
         public void LoadUrl(string url)
         {
+            this.WaitInitialized();
             this.ChangeScreenSize();
             //browser.ShowDevTools();//debug
             this.browser.Load(url);

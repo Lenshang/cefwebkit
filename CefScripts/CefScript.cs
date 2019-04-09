@@ -31,6 +31,7 @@ namespace CefWebKit.CefScripts
             var r = CefTaskPool.DefaultPool.getOrCreate("MainScript", out jsCef);
             this.ScriptForm = jsCef;
             this.ScriptForm.browser.RegisterAsyncJsObject("scriptEngine", new ScriptEngine(this));
+            this.ScriptForm.browser.RegisterAsyncJsObject("scriptBrowser", new ScriptBrowser(this));
             this.ScriptForm.WaitInitialized();
             //创建执行临时文件夹
             var tempPath = Path.Combine(Environment.CurrentDirectory, "_cefrun");

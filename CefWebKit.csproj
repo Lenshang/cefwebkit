@@ -95,6 +95,7 @@
     <Compile Include="CefCore\Handler\RequestHandler.cs" />
     <Compile Include="CefCore\JavaScriptLibrary.cs" />
     <Compile Include="CefScripts\CefScript.cs" />
+    <Compile Include="CefScripts\ScriptBrowser.cs" />
     <Compile Include="CefScripts\ScriptEngine.cs" />
     <Compile Include="Controller\Model\ApiResult.cs" />
     <Compile Include="Controller\Model\IAppAction.cs" />
@@ -137,6 +138,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestScripts\main.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestScripts\pixivDownload.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestScripts\sprite.png">

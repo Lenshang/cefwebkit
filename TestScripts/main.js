@@ -6,6 +6,8 @@ async function main() {
     await sleep(1000);
     writeLog("Lets Do It");
     await sleep(1000);
+    await waitClick("点击这里继续");
+    writeLog("Yes");
     test();
 }
 main();

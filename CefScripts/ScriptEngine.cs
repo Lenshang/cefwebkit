@@ -1,4 +1,5 @@
-﻿using CefWebKit.CefCore;
+﻿using CefSharp;
+using CefWebKit.CefCore;
 using Chen.CommonLibrary;
 using System;
 using System.Collections.Generic;
@@ -46,14 +47,6 @@ namespace CefWebKit.CefScripts
             var r = CefTaskPool.DefaultPool.getOrCreate("MainScript", out jsCef);
             jsCef.FormSize = new System.Drawing.Size(width, height);
             jsCef.ChangeScreenSize();
-        }
-
-        public void loadUrl(string url)
-        {
-            //CefForm jsCef = null;
-            //var r = CefTaskPool.DefaultPool.getOrCreate("MainScript", out jsCef);
-            //jsCef.WaitToScript($"window.location.href=\"{url}\"");
-            //jsCef.WaitInitialized();
         }
     }
 }

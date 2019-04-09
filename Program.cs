@@ -32,7 +32,7 @@ namespace CefWebKit
                 setting.LogSeverity = LogSeverity.Disable;
                 
                 CefSharpSettings.LegacyJavascriptBindingEnabled = true;
-                CefSharpSettings.Proxy = new ProxyOptions("127.0.0.1", "8888");
+                //CefSharpSettings.Proxy = new ProxyOptions("127.0.0.1", "8888");
                 Cef.Initialize(setting);
             }
             #endregion
@@ -55,13 +55,15 @@ namespace CefWebKit
             #endregion
 
             #region 判断启动参数
-            args = new string[1]{"./TestScripts/game.js"};
+            args = new string[1] { "./TestScripts/pixivDownload.js" };
+            //args = new string[1] { "./TestScripts/main.js" };
             string arg = args?.FirstOrDefault();
             if (!string.IsNullOrEmpty(arg))
             {
                 var cefScript = CefScript.Create(arg);
                 cefScript.Run();
-                cefScript.ScriptForm.FormClosed += (obj, eventArg) => {
+                cefScript.ScriptForm.FormClosed += (obj, eventArg) =>
+                {
                     Environment.Exit(0);
                 };
             }
@@ -81,11 +83,41 @@ namespace CefWebKit
 
             while (true)
             {
-                string cmd = Console.ReadLine();
-                //string url= Console.ReadLine();
-                //url = "http://www.189.cn/dqmh/ssoLink.do?method=linkTo&platNo=10028&toStUrl=http%3A%2F%2Fgs.189.cn%2Fservice%2Fv7%2Ffycx%2Fxd%2Findex.shtml%3Ffastcode%3D10000600&cityCode=gs";
+                //string cmd = Console.ReadLine();
+                ////url = "http://www.189.cn/dqmh/ssoLink.do?method=linkTo&platNo=10028&toStUrl=http%3A%2F%2Fgs.189.cn%2Fservice%2Fv7%2Ffycx%2Fxd%2Findex.shtml%3Ffastcode%3D10000600&cityCode=gs";
                 //CefForm cef1 = null;
                 //var r = CefTaskPool.DefaultPool.getOrCreate("abc", out cef1);
+                //cef1.LoadUrl("https://kd.meituan.com/open_store/pclogin?post=post&bg_source=3&part_type=0&service=kaidian&extChannel=12&ext_sign_up_channel=12&platform=2&source=12&continue=https%3A%2F%2Fkd.meituan.com%2Fsetbtoken%3Fsource%3D12%26redirect%3Dhttps%253A%252F%252Fkd.meituan.com%252Flogin%253Fsource%253D12");
+                //cef1.ShowDevTools();
+                //cef1.browser.GetBrowserHost().SetFocus(true);
+
+                //while (true)
+                //{
+                //    Console.WriteLine("输入鼠标移动位置 x,y");
+                //    var pos = Console.ReadLine();
+
+                //    int x = Convert.ToInt32(pos.Split(',')[0]);
+                //    int y = Convert.ToInt32(pos.Split(',')[1]);
+                //    var mouseMove = new MouseEvent(x, y, CefEventFlags.None);
+                //    //cef1.browser.GetBrowserHost().SetFocus(true);
+                //    var mouseClick = new MouseEvent(x, y, CefEventFlags.None);
+                //    cef1.browser.GetBrowserHost().SendMouseMoveEvent(mouseMove, false);
+                //    Console.WriteLine("按回车点击");
+                //    //Console.ReadLine();
+                //    //cef1.browser.GetBrowserHost().SetFocus(true);
+                //    cef1.browser.GetBrowserHost().SendMouseClickEvent(mouseClick, MouseButtonType.Left, false, 1);
+                //    Thread.Sleep(100);
+                //    cef1.browser.GetBrowserHost().SendMouseClickEvent(mouseClick, MouseButtonType.Left, true, 1);
+                //    Console.WriteLine("按回车键入A");
+                //    //Console.ReadLine();
+                //    //cef1.browser.GetBrowserHost().SetFocus(true);
+                //    var ke = new KeyEvent();
+                //    ke.Type = KeyEventType.Char;
+                //    ke.WindowsKeyCode = 65;
+                //    cef1.browser.GetBrowserHost().SendKeyEvent(ke);
+                //}
+
+                //cef1.browser.GetBrowserHost().SendKeyEvent(ke);
                 //Thread.Sleep(1000);
                 //string id = cef1.SetUrlMonitor("aggsite/SubCategories", Model.RULEMODE.CONTAIN);
                 //cef1.LoadUrl(url);
