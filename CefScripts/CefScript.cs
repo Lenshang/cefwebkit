@@ -18,6 +18,7 @@ namespace CefWebKit.CefScripts
         public FileHelper fileHelper { get; set; }
         public CefForm ScriptForm { get; set; }
         public DirectoryInfo runTempPath { get; set; }
+        public string[] arguments { get; set; }
         public CefScript(string scriptFile)
         {
             this.filePath = new FileInfo(scriptFile);
@@ -52,7 +53,15 @@ namespace CefWebKit.CefScripts
             string url= tempPath + @"\MainPage.html";
             url = url.Replace("\\", "/").Replace(" ", "%20");
             this.ScriptForm.LoadUrl(url);
-            jsCef.ShowDevTools();
+
+            var _filePath = Path.Combine(this.runTempPath.FullName, this.filePath.Name);
+            string scriptStr = $@"
+                var script = document.createElement('script');
+                script.src = '{_filePath.Replace("\\", "/").Replace(" ", "%20")}';
+                document.getElementsByTagName('head')[0].appendChild(script);
+            ";
+            jsCef.WaitToScript(scriptStr);
+            //jsCef.ShowDevTools();
         }
 
         public Task<JavascriptResponse> Run()
@@ -62,7 +71,13 @@ namespace CefWebKit.CefScripts
             {
                 Thread.Sleep(100);
             }
-            return this.ScriptForm.browser.EvaluateScriptAsync(fileHelper.readFile(Path.Combine(this.runTempPath.FullName,this.filePath.Name)));
+            return this.ScriptForm.browser.EvaluateScriptAsync("__main();");
+            //DateTime dtStart = DateTime.Now;
+            //while (!this.ScriptForm.renderProcess.CanScript && ((DateTime.Now - dtStart).TotalMilliseconds < 1000))
+            //{
+            //    Thread.Sleep(100);
+            //}
+            //return this.ScriptForm.browser.EvaluateScriptAsync(fileHelper.readFile(Path.Combine(this.runTempPath.FullName,this.filePath.Name)));
         }
 
         public static CefScript Create(string scriptFile)

@@ -55,12 +55,14 @@ namespace CefWebKit
             #endregion
 
             #region 判断启动参数
-            args = new string[1] { "./TestScripts/pixivDownload.js" };
-            //args = new string[1] { "./TestScripts/main.js" };
+            //args = new string[2] { "./TestScripts/pixivDownload.js","abc" };
+            args = new string[2] { "./TestScripts/main.js","abc" };
             string arg = args?.FirstOrDefault();
             if (!string.IsNullOrEmpty(arg))
             {
                 var cefScript = CefScript.Create(arg);
+                var otherArgs = args.Skip(1).ToArray();
+                cefScript.arguments = otherArgs;
                 cefScript.Run();
                 cefScript.ScriptForm.FormClosed += (obj, eventArg) =>
                 {

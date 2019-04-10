@@ -48,5 +48,21 @@ namespace CefWebKit.CefScripts
             jsCef.FormSize = new System.Drawing.Size(width, height);
             jsCef.ChangeScreenSize();
         }
+
+        public string[] getArgs()
+        {
+            return this.cefScript.arguments;
+        }
+
+        public void debug()
+        {
+            CefForm jsCef = null;
+            var r = CefTaskPool.DefaultPool.getOrCreate("MainScript", out jsCef);
+            jsCef.ShowDevTools();
+            //string scriptStr = $@"
+            //    await waitClick('点击这里继续');
+            //";
+            //jsCef.WaitToScript(scriptStr);
+        }
     }
 }
