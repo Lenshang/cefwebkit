@@ -48,7 +48,7 @@ namespace CefWebKit.CefScripts
 
             //复制执行代码下的文件到临时文件夹
             fileHelper.CopyAll(filePath.DirectoryName, tempPath,x=> {
-                return x != "_cefrun";
+                return !(x.Contains("_cefrun")|| x.Contains("_app") || x.Contains("GPUCache") || x.Contains("blob_storage"));
             });
 
             string url= tempPath + @"\MainPage.html";

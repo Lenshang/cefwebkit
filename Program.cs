@@ -56,8 +56,8 @@ namespace CefWebKit
             #endregion
 
             #region 判断启动参数
-            args = new string[2] { "./TestScripts/pixivDownload.js","abc" };
-            //args = new string[2] { "./TestScripts/main.js","abc" };
+            //args = new string[2] { "./TestScripts/pixivDownload.js","abc" };
+            //args = new string[2] { "./TestScripts/game.js","abc" };
             string arg = args?.FirstOrDefault();
             if (!string.IsNullOrEmpty(arg))
             {

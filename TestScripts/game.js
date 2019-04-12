@@ -1,5 +1,5 @@
-﻿async function main() {
-    await scriptEngineAsync.import("__crafty_old.js");
+﻿async function __main() {
+    await scriptEngine.import("__crafty_old.js");
 
     scriptEngine.changeSize(435, 375);
     scriptEngine.writeln("游戏启动");
@@ -135,5 +135,3 @@
             .rightControls(1);
     });
 }
-
-main();

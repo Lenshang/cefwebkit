@@ -24,7 +24,7 @@ namespace CefWebKit.CefCore
         public bool IsInitialized { get; set; } = false;
         public bool ScriptMode { get; set; } = false;
 
-        public System.Drawing.Size FormSize { get; set; } = new System.Drawing.Size(1280, 720);
+        public System.Drawing.Size FormSize { get; set; } = new System.Drawing.Size(800, 600);
         public bool FullScreen { get; set; } = false;
         public CefForm(string cookiePath="",int formWidth=800,int formHeight=600,bool fullScreen=false)
         {
