@@ -50,6 +50,19 @@ namespace Chen.CommonLibrary
                 Directory.CreateDirectory(path);
             }
         }
+        public byte[] readFileByte(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return null;
+            }
+            FileStream file = new FileStream(path, FileMode.Open);
+            byte[] byData = new byte[Convert.ToInt32(file.Length)];
+            file.Seek(0, SeekOrigin.Begin);
+            file.Read(byData, 0, byData.Length);
+            file.Close();
+            return byData;
+        }
         public string readFile(string path,Encoding encode=null)
         {
             if (!File.Exists(path))

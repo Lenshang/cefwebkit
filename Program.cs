@@ -32,6 +32,7 @@ namespace CefWebKit
                 setting.LogSeverity = LogSeverity.Disable;
                 
                 CefSharpSettings.LegacyJavascriptBindingEnabled = true;
+
                 //CefSharpSettings.Proxy = new ProxyOptions("127.0.0.1", "8888");
                 Cef.Initialize(setting);
             }
@@ -55,8 +56,8 @@ namespace CefWebKit
             #endregion
 
             #region 判断启动参数
-            //args = new string[2] { "./TestScripts/pixivDownload.js","abc" };
-            args = new string[2] { "./TestScripts/main.js","abc" };
+            args = new string[2] { "./TestScripts/pixivDownload.js","abc" };
+            //args = new string[2] { "./TestScripts/main.js","abc" };
             string arg = args?.FirstOrDefault();
             if (!string.IsNullOrEmpty(arg))
             {
@@ -85,6 +86,15 @@ namespace CefWebKit
 
             while (true)
             {
+                //CefForm cef1 = null;
+                //var r = CefTaskPool.DefaultPool.getOrCreate("abc", out cef1);
+                //cef1.WaitInitialized();
+                
+                //cef1.LoadUrl("https://www.baidu.com");
+                //Console.ReadLine();
+                //cef1.SetProxy("http://127.0.0.1:8388");
+                //cef1.LoadUrl("https://www.baidu.com");
+                //Console.ReadLine();
                 //string cmd = Console.ReadLine();
                 ////url = "http://www.189.cn/dqmh/ssoLink.do?method=linkTo&platNo=10028&toStUrl=http%3A%2F%2Fgs.189.cn%2Fservice%2Fv7%2Ffycx%2Fxd%2Findex.shtml%3Ffastcode%3D10000600&cityCode=gs";
                 //CefForm cef1 = null;
@@ -129,7 +139,7 @@ namespace CefWebKit
                 //Console.ReadLine();
                 //Console.WriteLine(cef1.GetUrlMonitorLatestContent(id)?.text);
             }
-            
+
         }
 
         static void StartApi()

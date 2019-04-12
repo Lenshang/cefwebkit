@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Specialized;
 
 namespace CefWebKit.CefCore.Handler
 {
@@ -15,6 +16,7 @@ namespace CefWebKit.CefCore.Handler
     {
         public ConcurrentDictionary<string,UrlMonitorModel> UrlMonitor { get; set; }
         public Dictionary<UInt64, MemoryStreamResponseFilter> responseDictionary { get; set; }
+
         public RequestHandler(ConcurrentDictionary<string, UrlMonitorModel> urlMonitor)
         {
             this.responseDictionary = new Dictionary<UInt64, MemoryStreamResponseFilter>();

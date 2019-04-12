@@ -1,5 +1,6 @@
 ﻿using CefSharp;
 using CefWebKit.CefCore;
+using CefWebKit.Utils;
 using Chen.CommonLibrary;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace CefWebKit.CefScripts
             var filePath = Path.Combine(this.cefScript.runTempPath.FullName, file);
             string scriptStr = $@"
                 var script = document.createElement('script');
-                script.src = '{filePath.Replace("\\", "/").Replace(" ", "%20")}';
+                script.src = '{StringHelper.localPathEncode(filePath)}';
                 document.getElementsByTagName('head')[0].appendChild(script);
             ";
             jsCef.WaitToScript(scriptStr);

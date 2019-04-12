@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CefSharp;
 using System.IO;
 using System.Windows.Forms;
+using CefWebKit.Utils;
 
 namespace CefWebKit.CefScripts
 {
@@ -51,13 +52,13 @@ namespace CefWebKit.CefScripts
             });
 
             string url= tempPath + @"\MainPage.html";
-            url = url.Replace("\\", "/").Replace(" ", "%20");
+            url = StringHelper.localPathEncode(url);
             this.ScriptForm.LoadUrl(url);
 
             var _filePath = Path.Combine(this.runTempPath.FullName, this.filePath.Name);
             string scriptStr = $@"
                 var script = document.createElement('script');
-                script.src = '{_filePath.Replace("\\", "/").Replace(" ", "%20")}';
+                script.src = '{StringHelper.localPathEncode(_filePath)}';
                 document.getElementsByTagName('head')[0].appendChild(script);
             ";
             jsCef.WaitToScript(scriptStr);

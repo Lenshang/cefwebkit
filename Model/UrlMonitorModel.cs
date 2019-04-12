@@ -1,6 +1,8 @@
 ﻿using CefWebKit.CefCore.Filters;
+using Chen.CommonLibrary;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -17,9 +19,46 @@ namespace CefWebKit.Model
     }
     public class HtmlContent
     {
+        private string dirName = "html_content_temp";
+        private FileHelper fh = new FileHelper();
+        public HtmlContent()
+        {
+            if (!Directory.Exists(dirName))
+            {
+                Directory.CreateDirectory(dirName);
+            }
+        }
+        public string _id { get; set; }
         public string url { get; set; }
-        public string text { get; set; }
-        public string contentB64 { get; set; }
+        public string text {
+            get
+            {
+                return Encoding.UTF8.GetString(this.getBytes());
+            }
+        }
+        public string contentB64 {
+            get
+            {
+                return Convert.ToBase64String(this.getBytes());
+            }
+        }
+        private string cacheFile { get; set; }
+        public void setBytes(byte[] bts,string name)
+        {
+            var filename=MD5Helper.getMd5Hash(name)+".cache";
+            this._id = filename;
+            this.cacheFile = Path.Combine(dirName, filename);
+            fh.SaveFile(this.cacheFile, bts);
+        }
+
+        public byte[] getBytes()
+        {
+            if (File.Exists(this.cacheFile))
+            {
+                return fh.readFileByte(this.cacheFile);
+            }
+            return null;
+        }
     }
     public class UrlMonitorModel
     {
@@ -53,28 +92,24 @@ namespace CefWebKit.Model
                 return Regex.IsMatch(url, urlRule);
             }
         }
-        public bool SetResult(string url,string htmlText)
-        {
-            lock (locker)
-            {
-                this.htmls.Add(new HtmlContent() {
-                    url = url,
-                    text = htmlText,
-                    contentB64=Convert.ToBase64String(Encoding.UTF8.GetBytes(htmlText))
-                });
-            }
-            return true;
-        }
+
         public bool SetResult(string url, byte[] htmlBytes)
         {
             lock (locker)
             {
-                string htmlText = Encoding.UTF8.GetString(htmlBytes);
-                this.htmls.Add(new HtmlContent() {
-                    url = url,
-                    text = htmlText,
-                    contentB64 = Convert.ToBase64String(htmlBytes)
-                });
+                //string htmlText = Encoding.UTF8.GetString(htmlBytes);
+
+                var content = new HtmlContent()
+                {
+                    url = url
+                };
+                content.setBytes(htmlBytes,url);
+                this.htmls.Add(content);
+                //this.htmls.Add(new HtmlContent() {
+                //    url = url,
+                //    text = htmlText,
+                //    contentB64 = Convert.ToBase64String(htmlBytes)
+                //});
             }
             return true;
         }

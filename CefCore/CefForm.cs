@@ -20,6 +20,7 @@ namespace CefWebKit.CefCore
         public ICookieManager cookieManager { get; set; }
         public RenderProcessMessageHandler renderProcess { get; private set; }
         public RequestHandler requestHandler { get; private set; }
+        public RequestContext requestContext { get; set; }
         public bool IsInitialized { get; set; } = false;
         public bool ScriptMode { get; set; } = false;
 
@@ -30,7 +31,7 @@ namespace CefWebKit.CefCore
             this.FormSize = new System.Drawing.Size(formWidth, formHeight);
             //初始化CEF
             var requestContextHandler = new RequestContextHandler(cookiePath);
-            var requestContext = new RequestContext(requestContextHandler);
+            this.requestContext = new RequestContext(requestContextHandler);
             renderProcess = new RenderProcessMessageHandler();
             requestHandler= new RequestHandler(new ConcurrentDictionary<string, UrlMonitorModel>());
             browser = new ChromiumWebBrowser("about:blank")
@@ -385,6 +386,25 @@ namespace CefWebKit.CefCore
             if (urlMonitor == null) return null;
             return urlMonitor.htmls.LastOrDefault();
         }
+
+        public string SetProxy(string server)
+        {
+            string error = "";
+            Cef.UIThreadTaskFactory.StartNew(()=> {
+                DateTime stime = DateTime.Now;
+                while (!this.requestContext.CanSetPreference("proxy")&&(DateTime.Now-stime)<TimeSpan.FromSeconds(10))
+                {
+                    Thread.Sleep(100);
+                }
+                Dictionary<string, object> proxyValue = new Dictionary<string, object>();
+                proxyValue.Add("mode", "fixed_servers");
+                proxyValue.Add("server", server);
+                bool success = this.requestContext.SetPreference("proxy", proxyValue, out error);
+                
+            }).Wait();
+            return error;
+        }
+
         /// <summary>
         /// 创建一个实例对象，并在另一个线程启动它，返回该实例对象
         /// </summary>

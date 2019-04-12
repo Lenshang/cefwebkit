@@ -98,5 +98,12 @@ namespace CefWebKit.CefScripts
             }
             return result.ToArray();
         }
+
+        public string setProxy(string server, string id = "web")
+        {
+            CefForm jsCef = null;
+            var r = CefTaskPool.DefaultPool.getOrCreate(id, out jsCef);
+            return jsCef.SetProxy(server);
+        }
     }
 }

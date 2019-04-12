@@ -112,6 +112,7 @@
     <Compile Include="Utils\FileHelper.cs" />
     <Compile Include="Utils\LogHelper.cs" />
     <Compile Include="Utils\MD5Helper.cs" />
+    <Compile Include="Utils\StringHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

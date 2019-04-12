@@ -1,7 +1,7 @@
 ﻿async function sleep(_msecond) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve()
+            resolve();
         }, _msecond);
     });
 }
@@ -10,13 +10,21 @@ function btClick() {
     _isClick = true;
 }
 async function waitClick(buttonName) {
-    document.writeln("<button id=\"waitclick\" type=\"button\" onclick=\"btClick()\">" + buttonName+"</button>")
+    document.writeln("<button id=\"waitclick\" type=\"button\" onclick=\"btClick()\">" + buttonName + "</button>");
 
-    while (_isClick == false) {
+    while (_isClick === false) {
         await sleep(100);
     }
     _isClick = false;
     document.querySelector("body").removeChild(document.getElementById("waitclick"));
+}
+
+async function waitInput(name) {
+    document.writeln("<input type=\"url\" name=\"user_url\" id=\"inputValue\"/>");
+    await waitClick("确认");
+    var r = document.querySelector("#inputValue").value;
+    document.querySelector("body").removeChild(document.getElementById("inputValue"));
+    return r;
 }
 
 async function waitDebug() {
